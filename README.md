@@ -1,2 +1,2 @@
 # rotC5
-Rotational connect 5 engine
+Agent that plays a rotational connect 5 - a variation of connect 4.
