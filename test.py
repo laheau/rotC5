@@ -254,19 +254,17 @@ if __name__ == "__main__":
 
     now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
     now = now.strftime("%Y%m%d%H%M%S")
-    ckpt_dir = ocp.test_utils.erase_and_create_empty('checkpoints/')
+    ckpt_dir = ocp.test_utils.erase_and_create_empty('/tmp/checkpoints', now)
 
     iteration: int = 0
-    hours: float = 0.0
     frames: int = 0
-    log = {"iteration": iteration, "hours": hours, "frames": frames}
+    log = {"iteration": iteration, "frames": frames}
 
     
     while True:
         if iteration >= config.max_num_iters:
             break
 
-        iteration += 1
         st = time.time()
 
 
@@ -277,7 +275,6 @@ if __name__ == "__main__":
             R = evaluate(sub_key, model)
             log.update({
                 "winrate": R.item(),
-                "iteration": iteration,
             })
             _, state = nnx.split(model)
             checkpointer = ocp.StandardCheckpointer()
@@ -322,7 +319,7 @@ if __name__ == "__main__":
             "policy_loss": policy_loss,
             "value_loss": value_loss,
             "frames": frames,
-            "hours": hours,
             "iteration": iteration,
         })
         wandb.log(log)
+        iteration += 1
