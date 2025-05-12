@@ -1,0 +1,3 @@
+[submodule "external/pgx"]
+	path = external/pgx
+	url = git@github.com:laheau/pgx-rotational-connect5.git
